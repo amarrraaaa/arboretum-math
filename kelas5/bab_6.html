@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bab 9 - Mengukur dan Menggambar Sudut</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --hijau-tua: #2d6a4f;
+            --hijau-bambu: #52b788;
+            --cokelat-muda: #d4a373;
+            --cokelat-tua: #8c7851;
+            --putih-glass: rgba(255, 255, 255, 0.96);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=2074&auto=format&fit=crop');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            min-height: 100vh; color: #333;
+        }
+
+        .container {
+            max-width: 750px; margin: 40px auto; padding: 20px;
+        }
+
+        .main-card {
+            background: var(--putih-glass); border-radius: 40px; padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 6px solid var(--hijau-bambu);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: var(--hijau-tua); font-weight: 800; margin: 10px 0; font-size: 1.8em; }
+        .header p { color: var(--cokelat-tua); font-weight: 600; }
+
+        .intro-box { 
+            line-height: 1.6; background: #f1f8e9; padding: 20px; 
+            border-radius: 25px; margin-bottom: 30px; border-left: 8px solid var(--hijau-bambu);
+            font-size: 0.95em;
+        }
+
+        /* Styling Visual Sudut */
+        .place-value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .place-box {
+            background: white;
+            border: 2px solid var(--hijau-bambu);
+            padding: 10px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .place-box span {
+            display: block;
+            font-size: 0.75em;
+            color: var(--cokelat-tua);
+            font-weight: 600;
+        }
+
+        .place-box strong {
+            font-size: 1.1em;
+            color: var(--hijau-tua);
+        }
+
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin-bottom: 30px;
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .comparison-table th {
+            background: var(--hijau-tua); color: white; padding: 15px; text-align: left;
+        }
+        .comparison-table td {
+            padding: 15px; border-bottom: 1px solid #eee; font-size: 0.9em;
+        }
+
+        .highlight-card {
+            background: white; border: 2px dashed var(--hijau-bambu);
+            padding: 20px; border-radius: 25px; margin-bottom: 25px;
+        }
+
+        .highlight-card h3 { color: var(--hijau-tua); margin-top: 0; display: flex; align-items: center; gap: 10px; }
+
+        .example-box {
+            background: #fffef0;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 10px;
+            border: 1px solid #ffe082;
+        }
+
+        .btn-container { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        
+        .btn-3d {
+            font-family: 'Poppins', sans-serif; padding: 18px; font-size: 1.1em; font-weight: 700;
+            text-align: center; color: white; border-radius: 20px; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none;
+            transition: 0.2s;
+        }
+        
+        .btn-video { background: var(--cokelat-muda); box-shadow: 0 8px 0 var(--cokelat-tua); color: white; }
+        .btn-video:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--cokelat-tua); }
+        
+        .btn-quiz { background: var(--hijau-bambu); box-shadow: 0 8px 0 var(--hijau-tua); color: white; }
+        .btn-quiz:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--hijau-tua); }
+
+        .btn-back { color: var(--hijau-tua); text-decoration: none; font-weight: 600; display: block; margin-top: 25px; text-align: center; }
+
+        @media (max-width: 600px) {
+            .main-card { padding: 25px; }
+            .place-value-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-card">
+        <div class="header">
+            <i class="fas fa-compass fa-4x" style="color: var(--hijau-bambu);"></i>
+            <h1>Bab 9: Rahasia Busur Derajat</h1>
+            <p>Mengukur dan Menggambar Sudut</p>
+        </div>
+
+        <div class="intro-box">
+            <p>Halo Arsitek Muda! Di alam semesta, semua benda memiliki kemiringan atau sudut tertentu. Untuk membangun rumah bambu yang kokoh, kita harus tahu cara mengukur sudut menggunakan <strong>Busur Derajat</strong>. Mari jelajahi tipenya!</p>
+        </div>
+
+        <!-- Bagian 1: Jenis Sudut -->
+        <div class="highlight-card">
+            <h3><i class="fas fa-shapes"></i> Mengenal Jenis Sudut</h3>
+            <p>Sudut diukur dalam satuan <strong>Derajat (°)</strong>. Berikut adalah keluarga besar sudut:</p>
+            
+            <div class="place-value-grid">
+                <div class="place-box">
+                    <span>Kurang 90°</span>
+                    <strong>Sudut Lancip</strong>
+                </div>
+                <div class="place-box">
+                    <span>Tepat 90°</span>
+                    <strong>Sudut Siku-Siku</strong>
+                </div>
+                <div class="place-box">
+                    <span>Lebih 90°</span>
+                    <strong>Sudut Tumpul</strong>
+                </div>
+                <div class="place-box">
+                    <span>Tepat 180°</span>
+                    <strong>Sudut Lurus</strong>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <i class="fas fa-info-circle"></i> <strong>Fakta Unik:</strong><br>
+                Satu lingkaran penuh memiliki sudut sebesar 360°. Itu seperti kamu berputar satu kali penuh kembali ke depan!
+            </div>
+        </div>
+
+        <!-- Bagian 2: Cara Mengukur -->
+        <div class="highlight-card">
+            <h3><i class="fas fa-pencil-ruler"></i> Cara Menggunakan Busur</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Langkah</th>
+                        <th>Tindakan Penting</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong style="color: var(--hijau-tua);">1</strong></td>
+                        <td>Himpitkan titik pusat busur dengan titik sudut benda.</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: var(--hijau-tua);">2</strong></td>
+                        <td>Pastikan salah satu kaki sudut berada tepat di angka 0.</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: var(--hijau-tua);">3</strong></td>
+                        <td>Lihat angka yang ditunjuk oleh kaki sudut yang satunya.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><small>*Tips: Selalu perhatikan apakah kamu menggunakan skala dalam atau skala luar busur!</small></p>
+        </div>
+
+        <div class="btn-container">
+            <a href="https://youtu.be/V95XMoRTkVI?si=tqIkUfwe39G2qpZY" class="btn-3d btn-video" >
+                <i class="fas fa-play-circle fa-lg"></i> Tonton Video Seru
+            </a>
+            <a href="quiz_bab6.html" class="btn-3d btn-quiz">
+                <i class="fas fa-leaf fa-lg"></i> Tantangan Kuis Bab 6
+            </a>
+        </div>
+        
+        <a href="nyoba.html" class="btn-back"><i class="fas fa-arrow-left"></i> Kembali ke Petualangan Belajar</a>
+    </div>
+</div>
+
+</body>
+</html>

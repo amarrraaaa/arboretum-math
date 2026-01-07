@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bab 1 - Bilangan Cacah sampai 100.000</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --hijau-tua: #2d6a4f;
+            --hijau-bambu: #52b788;
+            --cokelat-muda: #d4a373;
+            --cokelat-tua: #8c7851;
+            --putih-glass: rgba(255, 255, 255, 0.96);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('bg.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            min-height: 100vh; color: #333;
+        }
+
+        .container {
+            max-width: 750px; margin: 40px auto; padding: 20px;
+        }
+
+        .main-card {
+            background: var(--putih-glass); border-radius: 40px; padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 6px solid var(--hijau-bambu);
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: var(--hijau-tua); font-weight: 800; margin: 10px 0; font-size: 1.8em; }
+        .header p { color: var(--cokelat-tua); font-weight: 600; }
+
+        .intro-box { 
+            line-height: 1.6; background: #f1f8e9; padding: 20px; 
+            border-radius: 25px; margin-bottom: 30px; border-left: 8px solid var(--hijau-bambu);
+            font-size: 0.95em;
+        }
+
+        .place-value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .place-box {
+            background: white;
+            border: 2px solid var(--hijau-bambu);
+            padding: 10px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .place-box span {
+            display: block; font-size: 0.75em; color: var(--cokelat-tua); font-weight: 600;
+        }
+
+        .place-box strong {
+            font-size: 1.2em; color: var(--hijau-tua);
+        }
+
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin-bottom: 30px;
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .comparison-table th {
+            background: var(--hijau-tua); color: white; padding: 15px; text-align: left;
+        }
+        .comparison-table td {
+            padding: 15px; border-bottom: 1px solid #eee; font-size: 0.9em;
+        }
+
+        .highlight-card {
+            background: white; border: 2px dashed var(--hijau-bambu);
+            padding: 20px; border-radius: 25px; margin-bottom: 25px;
+        }
+
+        .highlight-card h3 { color: var(--hijau-tua); margin-top: 0; display: flex; align-items: center; gap: 10px; }
+
+        .btn-container { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        
+        .btn-3d {
+            font-family: 'Poppins', sans-serif; padding: 18px; font-size: 1.1em; font-weight: 700;
+            text-align: center; color: white; border-radius: 20px; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none;
+            transition: 0.2s;
+        }
+        
+        .btn-video { background: var(--cokelat-muda); box-shadow: 0 8px 0 var(--cokelat-tua); color: white; }
+        .btn-video:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--cokelat-tua); }
+        
+        .btn-quiz { background: var(--hijau-bambu); box-shadow: 0 8px 0 var(--hijau-tua); color: white; }
+        .btn-quiz:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--hijau-tua); }
+
+        .btn-back { color: var(--hijau-tua); text-decoration: none; font-weight: 600; display: block; margin-top: 25px; text-align: center; }
+
+        /* VIDEO MODAL STYLES */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .video-content {
+            background: white;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 30px rgba(82, 183, 136, 0.5);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+
+        .close-video {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: var(--hijau-bambu);
+            color: white;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            border: 3px solid white;
+            transition: 0.3s;
+        }
+
+        .close-video:hover { transform: rotate(90deg) scale(1.1); background: var(--hijau-tua); }
+
+        .video-info { padding: 20px; text-align: center; }
+        .video-info h4 { margin: 0; color: var(--hijau-tua); font-weight: 800; }
+
+        @media (max-width: 600px) {
+            .main-card { padding: 25px; }
+            .place-value-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-card">
+        <div class="header">
+            <i class="fas fa-mountain fa-4x" style="color: var(--hijau-bambu);"></i>
+            <h1>Bab 1: Petualangan Puluh Ribuan</h1>
+            <p>Bilangan Cacah sampai 100.000</p>
+        </div>
+
+        <div class="intro-box">
+            <p>Halo Petualang Cilik! Tahukah kamu bahwa tinggi gunung dan jumlah penduduk desa bisa mencapai puluhan ribu? Mari kita belajar cara membaca, menulis, dan memahami nilai tempat hingga <strong>seratus ribu</strong>!</p>
+        </div>
+
+        <!-- Bagian 1: Nilai Tempat -->
+        <div class="highlight-card">
+            <h3><i class="fas fa-layer-group"></i> Mengenal Nilai Tempat</h3>
+            <p>Mari perhatikan angka: <strong>75.642</strong></p>
+            
+            <div class="place-value-grid">
+                <div class="place-box"><span>Puluh Ribuan</span><strong>7</strong></div>
+                <div class="place-box"><span>Ribuan</span><strong>5</strong></div>
+                <div class="place-box"><span>Ratusan</span><strong>6</strong></div>
+                <div class="place-box"><span>Puluhan</span><strong>4</strong></div>
+                <div class="place-box"><span>Satuan</span><strong>2</strong></div>
+            </div>
+            
+            <div class="highlight-card" style="margin-bottom:0; background: #fffef0; border: 1px solid #ffe082;">
+                <i class="fas fa-info-circle"></i> <strong>Cara Membaca:</strong><br>
+                "Tujuh puluh lima ribu enam ratus empat puluh dua"
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <!-- Tombol Video Sekarang Mengaktifkan Modal -->
+           <div class="btn-container">
+            <a href="https://youtu.be/gEnm17JI6xk?si=gc3Ukrw6StWh_PRS" class="btn-3d btn-video" >
+                <i class="fas fa-play-circle fa-lg"></i> Tonton Video Seru
+            </a>
+            
+            <a href="quiz_bab1.html" class="btn-3d btn-quiz">
+                <i class="fas fa-leaf fa-lg"></i> Tantangan Kuis Bab 1
+            </a>
+        </div>
+        
+        <a href="nyoba.html" class="btn-back"><i class="fas fa-arrow-left"></i> Kembali ke Petualangan Belajar</a>
+    </div>
+</div>
+
+<!-- CONTAINER MODAL VIDEO -->
+<div id="videoModal" class="video-modal">
+    <div class="video-content">
+        <div class="close-video" onclick="stopVideo()">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="video-wrapper">
+            <iframe id="youtubePlayer" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+            <h4><i class="fas fa-graduation-cap"></i> Belajar Puluhan Ribu</h4>
+            <p style="font-size: 0.85em; color: #666; margin-top: 5px;">Tonton sampai habis agar kamu makin jago!</p>
+        </div>
+    </div>
+</div>
+
+<script>
+</script>
+
+</body>
+</html>

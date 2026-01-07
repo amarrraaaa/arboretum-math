@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelajahi Dunia Matematika Panda</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bamboo-green: #2ecc71;
+            --bamboo-dark: #1e8449;
+            --wood-brown: #795548; 
+            --wood-light: #a1887f; 
+            --wood-dark: #4e342e;  
+            --bg-overlay: rgba(255, 255, 255, 0.75);
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--wood-dark);
+            padding: 40px 20px;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ================= NAV BUTTON ================= */
+        .back-nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .btn-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: white;
+            background: var(--wood-brown);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-bottom: 3px solid var(--wood-dark);
+            transition: all 0.2s ease;
+        }
+
+        .btn-back:hover {
+            background: var(--bamboo-dark);
+            border-bottom-color: #145a32;
+            transform: translateY(-2px);
+        }
+
+        .btn-back:active {
+            transform: translateY(0);
+            border-bottom-width: 0px;
+            margin-top: 3px;
+        }
+
+        /* ================= HEADER ================= */
+        .header-section {
+            text-align: center;
+            max-width: 700px;
+            margin: 20px auto 50px;
+        }
+
+        .header-section .badge {
+            display: inline-block;
+            background: var(--bamboo-dark);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border: 2px solid var(--wood-brown);
+        }
+
+        .header-section h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--wood-dark);
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .header-section p {
+            font-size: 1.1rem;
+            color: var(--wood-brown);
+            font-weight: 500;
+        }
+
+        /* ================= CONTAINER ================= */
+        .bab-container {
+            max-width: 600px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* ================= ITEM BAB ================= */
+        .bab-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: inherit;
+            border: 2px solid var(--wood-light);
+            box-shadow: 0 4px 15px rgba(121, 85, 72, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .bab-item:hover {
+            transform: translateX(10px);
+            border-color: var(--bamboo-green);
+            background: #fff;
+            box-shadow: 0 8px 25px rgba(30, 132, 73, 0.2);
+        }
+
+        /* ================= KIRI: KONTEN ================= */
+        .bab-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .bab-icon {
+            width: 55px;
+            height: 55px;
+            background: #efebe9;
+            border: 2px solid var(--wood-brown);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--wood-dark);
+            transition: 0.3s;
+        }
+
+        .bab-item:hover .bab-icon {
+            background: var(--bamboo-green);
+            color: white;
+            border-color: var(--bamboo-dark);
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .bab-text h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--wood-dark);
+        }
+
+        .bab-text span {
+            font-size: 0.85rem;
+            color: var(--wood-brown);
+            font-weight: 500;
+        }
+
+        /* ================= KANAN: PANAH ================= */
+        .bab-right {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--wood-brown);
+            transition: 0.3s;
+        }
+
+        .bab-item:hover .bab-right {
+            color: var(--bamboo-dark);
+            transform: translateX(5px);
+        }
+
+        /* DEKORASI */
+        .decoration {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .back-nav { top: 10px; left: 10px; }
+            .btn-back { padding: 6px 12px; font-size: 0.8rem; }
+            .header-section { margin-top: 60px; }
+            .header-section h1 { font-size: 1.8rem; }
+            .bab-item { padding: 15px; }
+            .bab-icon { width: 45px; height: 45px; font-size: 1.1rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="back-nav">
+    <a href="index.html" class="btn-back">
+        <i class="fas fa-chevron-left"></i> Kembali
+    </a>
+</nav>
+
+<div class="header-section">
+    <h1>Petualangan Belajar<br>Panda Cerdik</h1>
+    <p>Klik bab mana saja untuk mulai belajar!</p>
+</div>
+
+<div class="bab-container">
+    <a href="bab_1.html" class="bab-item">
+        <div class="bab-left">
+            <div class="bab-icon"><i class="fas fa-calculator"></i></div>
+            <div class="bab-text">
+                <h3>Bab 1: Bilangan Cacah</h3>
+                <span>Bilangan s.d. 100.000</span>
+            </div>
+        </div>
+        <div class="bab-right"><i class="fas fa-arrow-right"></i></div>
+    </a>
+
+    <a href="bab_2.html" class="bab-item">
+        <div class="bab-left">
+            <div class="bab-icon"><i class="fas fa-divide"></i></div>
+            <div class="bab-text">
+                <h3>Bab 2: KPK & FPB</h3>
+                <span>Kelipatan dan Faktor</span>
+            </div>
+        </div>
+        <div class="bab-right"><i class="fas fa-arrow-right"></i></div>
+    </a>
+
+    <a href="bab_3.html" class="bab-item">
+        <div class="bab-left">
+            <div class="bab-icon"><i class="fas fa-chart-pie"></i></div>
+            <div class="bab-text">
+                <h3>Bab 3: Pecahan</h3>
+                <span>Penjumlahan & Pengurangan</span>
+            </div>
+        </div>
+        <div class="bab-right"><i class="fas fa-arrow-right"></i></div>
+    </a>
+
+    <a href="bab_4.html" class="bab-item">
+        <div class="bab-left">
+            <div class="bab-icon"><i class="fas fa-shapes"></i></div>
+            <div class="bab-text">
+                <h3>Bab 4: Keliling Bangun Datar</h3>
+                <span>Berbagai poligon & lingkaran</span>
+            </div>
+        </div>
+        <div class="bab-right"><i class="fas fa-arrow-right"></i></div>
+    </a>
+
+    <a href="bab_5.html" class="bab-item">
+        <div class="bab-left">
+            <div class="bab-icon"><i class="fas fa-expand-arrows-alt"></i></div>
+            <div class="bab-text">
+                <h3>Bab 5: Luas Bangun Datar</h3>
+                <span>Menghitung area permukaan</span>
+            </div>
+        </div>
+        <div class="bab-right"><i class="fas fa-arrow-right"></i></div>
+    </a>
+
+    <a href="bab_6.html" class="bab-item">
+        <div class="bab-left">
+            <div class="bab-icon"><i class="fas fa-compass"></i></div>
+            <div class="bab-text">
+                <h3>Bab 6: Sudut</h3>
+                <span>Mengukur & menggambar sudut</span>
+            </div>
+        </div>
+        <div class="bab-right"><i class="fas fa-arrow-right"></i></div>
+    </a>
+
+    <a href="bab_7.html" class="bab-item">
+        <div class="bab-left">
+            <div class="bab-icon"><i class="fas fa-cube"></i></div>
+            <div class="bab-text">
+                <h3>Bab 7: Bangun Ruang</h3>
+                <span>Membandingkan ciri & volume</span>
+            </div>
+        </div>
+        <div class="bab-right"><i class="fas fa-arrow-right"></i></div>
+    </a>
+
+    <a href="bab_8.html" class="bab-item">
+        <div class="bab-left">
+            <div class="bab-icon"><i class="fas fa-chart-bar"></i></div>
+            <div class="bab-text">
+                <h3>Bab 8: Data</h3>
+                <span>Membaca & menyajikan data</span>
+            </div>
+        </div>
+        <div class="bab-right"><i class="fas fa-arrow-right"></i></div>
+    </a>
+
+    <a href="bab_9.html" class="bab-item">
+        <div class="bab-left">
+            <div class="bab-icon"><i class="fas fa-rocket"></i></div>
+            <div class="bab-text">
+                <h3>Bab 9: Bilangan Cacah Besar</h3>
+                <span>Eksplorasi angka s.d 1.000.000</span>
+            </div>
+        </div>
+        <div class="bab-right"><i class="fas fa-arrow-right"></i></div>
+    </a>
+</div>
+
+<div class="decoration">🐼 🎋 🪵</div>
+
+</body>
+</html>

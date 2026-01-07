@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Bab 9 - Bilangan Cacah sampai 1.000.000</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --hijau-bambu: #2d6a4f;
+            --hijau-muda: #74c69d;
+            --coklat-bambu: #8b5e34;
+            --coklat-tua: #582f0e;
+            --hijau-benar: #2ecc71;
+            --merah-salah: #e74c3c;
+            --putih-kertas: rgba(255, 255, 245, 0.95);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('bg.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            min-height: 100vh; display: flex; justify-content: center; align-items: center;
+        }
+
+        .quiz-container {
+            max-width: 500px; width: 90%; background: var(--putih-kertas);
+            border-radius: 30px; padding: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 8px solid var(--coklat-bambu); text-align: center; position: relative;
+        }
+
+        .quiz-container::before {
+            content: "";
+            position: absolute;
+            top: -15px; left: -15px;
+            width: 50px; height: 50px;
+            border-top: 10px solid var(--hijau-bambu);
+            border-left: 10px solid var(--hijau-bambu);
+            border-radius: 10px 0 0 0;
+        }
+
+        .score-badge {
+            position: absolute; top: -20px; right: 20px; background: #ffb703;
+            padding: 10px 20px; border-radius: 20px; font-weight: 800;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); border: 3px solid white;
+            color: #594400;
+        }
+
+        .q-header { margin-bottom: 25px; }
+        .q-header h2 { color: var(--coklat-tua); font-size: 1.15em; line-height: 1.5; margin-top: 10px; }
+
+        .options-area { display: flex; flex-direction: column; gap: 15px; }
+
+        .btn-opt {
+            background: white; border: 2px solid #dce2d5; padding: 15px;
+            border-radius: 20px; font-family: 'Poppins'; font-weight: 600;
+            font-size: 1em; cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 5px 0 var(--coklat-bambu);
+            color: var(--coklat-tua);
+        }
+
+        .btn-opt:hover { background: #f1f8e9; border-color: var(--hijau-bambu); transform: translateY(-2px); }
+        .btn-opt:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--coklat-bambu); }
+
+        .correct { background: var(--hijau-benar) !important; color: white !important; border-color: #27ae60 !important; box-shadow: 0 5px 0 #27ae60 !important; }
+        .wrong { background: var(--merah-salah) !important; color: white !important; border-color: #c0392b !important; box-shadow: 0 5px 0 #c0392b !important; }
+
+        #result-screen { display: none; padding: 20px 0; }
+        .final-score { font-size: 4.5em; font-weight: 800; color: var(--hijau-bambu); margin: 5px 0; }
+
+        .btn-nav {
+            background: var(--coklat-bambu); color: white; border: none; padding: 15px 30px;
+            border-radius: 20px; font-weight: 800; cursor: pointer; margin-top: 20px;
+            box-shadow: 0 6px 0 var(--coklat-tua); font-family: 'Poppins'; width: 100%;
+            text-decoration: none; display: inline-block; text-align: center;
+        }
+        .btn-nav:hover { background: var(--coklat-tua); }
+        .btn-nav:active { transform: translateY(3px); box-shadow: 0 3px 0 #3e210a; }
+
+        #q-progress { font-weight: 800; color: var(--hijau-bambu); text-transform: uppercase; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="score-badge"><i class="fas fa-star"></i> Skor: <span id="score">0</span></div>
+    
+    <div id="quiz-screen">
+        <div class="q-header">
+            <p id="q-progress">TANTANGAN 1/5</p>
+            <h2 id="q-text">Sedang memuat soal...</h2>
+        </div>
+        <div class="options-area" id="options"></div>
+    </div>
+
+    <div id="result-screen">
+        <div id="icon-area">
+             <i id="result-icon" class="fas fa-star fa-4x" style="color: #ffb703; margin-bottom: 20px;"></i>
+        </div>
+        <h2 id="status-title" style="margin: 0; color: var(--coklat-tua);">Tantangan Selesai!</h2>
+        <p id="score-label" style="color: #555;">Poin Bilangan yang Dikumpulkan:</p>
+        <div class="final-score" id="final-score">0</div>
+        <p id="result-msg" style="font-weight: 600; color: #444; padding: 0 10px;"></p>
+        
+        <div id="action-buttons"></div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { 
+            q: "Bagaimana cara menuliskan lambang bilangan 'Lima ratus dua puluh ribu delapan ratus satu'?", 
+            a: ["520.801", "502.810", "520.081"], 
+            c: 0 
+        },
+        { 
+            q: "Pada bilangan 875.420, angka 7 menempati nilai tempat...", 
+            a: ["Ratus ribuan", "Puluh ribuan", "Ribuan"], 
+            c: 1 
+        },
+        { 
+            q: "Manakah pernyataan yang benar untuk membandingkan 456.789 dengan 456.879?", 
+            a: ["456.789 > 456.879", "456.789 = 456.879", "456.789 < 456.879"], 
+            c: 2 
+        },
+        { 
+            q: "Hasil dari 250.000 + 125.000 adalah...", 
+            a: ["375.000", "325.000", "475.000"], 
+            c: 0 
+        },
+        { 
+            q: "Berapakah nilai angka 9 pada bilangan 932.100?", 
+            a: ["9.000", "90.000", "900.000"], 
+            c: 2 
+        }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+    let canClick = true;
+
+    function loadQuestion() {
+        canClick = true;
+        const q = questions[currentIdx];
+        document.getElementById('q-progress').innerText = `TANTANGAN ${currentIdx + 1}/${questions.length}`;
+        document.getElementById('q-text').innerText = q.q;
+        
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        
+        q.a.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-opt';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(i, btn);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected, btn) {
+        if (!canClick) return;
+        canClick = false;
+
+        const correct = questions[currentIdx].c;
+        if (selected === correct) {
+            btn.classList.add('correct');
+            score += 20; 
+            document.getElementById('score').innerText = score;
+        } else {
+            btn.classList.add('wrong');
+            document.querySelectorAll('.btn-opt')[correct].classList.add('correct');
+        }
+
+        setTimeout(() => {
+            currentIdx++;
+            if (currentIdx < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }, 1200);
+    }
+
+    function showResults() {
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+        document.getElementById('final-score').innerText = score;
+        
+        const msg = document.getElementById('result-msg');
+        const actionBtnArea = document.getElementById('action-buttons');
+        const statusTitle = document.getElementById('status-title');
+        const resultIcon = document.getElementById('result-icon');
+
+        if (score >= 60) {
+            statusTitle.innerText = "Luar Biasa, Ahli Bilangan!";
+            resultIcon.className = "fas fa-star fa-4x";
+            resultIcon.style.color = "#ffb703";
+            msg.innerText = "Kamu hebat! Kamu sudah menguasai bilangan besar sampai satu juta dengan sempurna.";
+            
+            actionBtnArea.innerHTML = `
+                <button class="btn-nav" style="background: #2ecc71; box-shadow: 0 6px 0 #27ae60;" onclick="window.location.href='index.html'">
+                     KEMBALI KE MENU UTAMA <i class="fas fa-arrow-right"></i>
+                </button>
+            `;
+        } else {
+            statusTitle.innerText = "Ayo Fokus Lagi!";
+            resultIcon.className = "fas fa-redo fa-4x";
+            resultIcon.style.color = "#e74c3c";
+            msg.innerText = "Hampir saja! Teliti lagi nilai tempatnya dan coba pecahkan rekor baru!";
+            
+            actionBtnArea.innerHTML = `
+                <button class="btn-nav" onclick="location.reload()">
+                    ULANGI TANTANGAN <i class="fas fa-sync-alt"></i>
+                </button>
+            `;
+        }
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>

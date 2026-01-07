@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bab 8 - Pengolahan Data</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --hijau-tua: #2d6a4f;
+            --hijau-bambu: #52b788;
+            --cokelat-muda: #d4a373;
+            --cokelat-tua: #8c7851;
+            --putih-glass: rgba(255, 255, 255, 0.96);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('bg.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            min-height: 100vh; color: #333;
+        }
+
+        .container {
+            max-width: 750px; margin: 40px auto; padding: 20px;
+        }
+
+        .main-card {
+            background: var(--putih-glass); border-radius: 40px; padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 6px solid var(--hijau-bambu);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: var(--hijau-tua); font-weight: 800; margin: 10px 0; font-size: 1.8em; }
+        .header p { color: var(--cokelat-tua); font-weight: 600; }
+
+        .intro-box { 
+            line-height: 1.6; background: #f1f8e9; padding: 20px; 
+            border-radius: 25px; margin-bottom: 30px; border-left: 8px solid var(--hijau-bambu);
+            font-size: 0.95em;
+        }
+
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin-bottom: 30px;
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .comparison-table th {
+            background: var(--hijau-tua); color: white; padding: 15px; text-align: left;
+        }
+        .comparison-table td {
+            padding: 15px; border-bottom: 1px solid #eee; font-size: 0.9em;
+        }
+        .comparison-table tr:last-child td { border-bottom: none; }
+        .comparison-table tr:nth-child(even) { background: #f9fbf7; }
+
+        .vs-badge {
+            display: inline-block; background: var(--cokelat-muda); color: white;
+            padding: 4px 15px; border-radius: 12px; font-weight: 800; font-size: 0.85em;
+            margin: 10px 0; letter-spacing: 1px;
+        }
+
+        .highlight-card {
+            background: white; border: 2px dashed var(--hijau-bambu);
+            padding: 25px; border-radius: 25px; margin-bottom: 25px;
+        }
+
+        .highlight-card h3 { color: var(--hijau-tua); margin-top: 0; display: flex; align-items: center; gap: 10px; }
+        
+        .formula-box {
+            background: #e8f5e9; padding: 15px; border-radius: 15px; 
+            text-align: center; font-weight: 800; color: var(--hijau-tua);
+            font-size: 1.2em; border: 2px solid var(--hijau-bambu);
+            margin: 10px 0;
+        }
+
+        .example-list {
+            margin-top: 10px; padding-left: 20px; font-size: 0.9em;
+        }
+
+        .btn-container { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        
+        .btn-3d {
+            font-family: 'Poppins', sans-serif; padding: 18px; font-size: 1.1em; font-weight: 700;
+            text-align: center; color: white; border-radius: 20px; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none;
+            transition: 0.2s;
+        }
+        
+        .btn-video { background: var(--cokelat-muda); box-shadow: 0 8px 0 var(--cokelat-tua); color: white; }
+        .btn-video:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--cokelat-tua); }
+        
+        .btn-quiz { background: var(--hijau-bambu); box-shadow: 0 8px 0 var(--hijau-tua); color: white; }
+        .btn-quiz:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--hijau-tua); }
+
+        .btn-back { color: var(--hijau-tua); text-decoration: none; font-weight: 600; display: block; margin-top: 25px; text-align: center; }
+
+        @media (max-width: 600px) {
+            .main-card { padding: 25px; }
+            .formula-box { font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-card">
+        <div class="header">
+            <i class="fas fa-chart-line fa-4x" style="color: var(--hijau-bambu);"></i>
+            <h1>Bab 8: Mari Mengolah Data</h1>
+            <p>Menjadi Detektif Angka yang Hebat!</p>
+        </div>
+
+        <div class="intro-box">
+            <p>Halo detektif cilik! Data adalah sekumpulan informasi. Untuk mengerti rahasia di balik data, kita perlu menghitung <b>Mean</b>, <b>Median</b>, dan <b>Modus</b>. Yuk, pelajari rumusnya!</p>
+        </div>
+
+        <!-- Bagian Mean -->
+        <div class="vs-badge">KONSEP 1: MEAN</div>
+        <div class="highlight-card">
+            <h3><i class="fas fa-calculator"></i> Apa itu Mean?</h3>
+            <p>Mean adalah <b>Nilai Rata-rata</b> dari suatu kelompok data. Bayangkan kamu ingin membagi permen secara adil ke semua temanmu.</p>
+            <div class="formula-box">
+                Mean = Jumlah Seluruh Data ÷ Banyak Data
+            </div>
+            <ul class="example-list">
+                <li>Contoh: Nilai 5, 7, 9</li>
+                <li>Jumlah: 5 + 7 + 9 = 21</li>
+                <li>Banyak data: 3</li>
+                <li><b>Mean: 21 ÷ 3 = 7</b></li>
+            </ul>
+        </div>
+
+        <!-- Bagian Median -->
+        <div class="vs-badge">KONSEP 2: MEDIAN</div>
+        <div class="highlight-card">
+            <h3><i class="fas fa-arrows-alt-h"></i> Apa itu Median?</h3>
+            <p>Median adalah <b>Nilai Tengah</b> setelah data diurutkan dari yang terkecil ke yang terbesar.</p>
+            <div class="formula-box">
+                Median = Nilai di posisi paling tengah
+            </div>
+            <ul class="example-list">
+                <li>Data: 3, 1, 4, 2, 5</li>
+                <li>Urutkan: 1, 2, <b>3</b>, 4, 5</li>
+                <li><b>Median: 3</b></li>
+            </ul>
+        </div>
+
+        <!-- Bagian Modus -->
+        <div class="vs-badge">KONSEP 3: MODUS</div>
+        <div class="highlight-card">
+            <h3><i class="fas fa-star"></i> Apa itu Modus?</h3>
+            <p>Modus adalah <b>Data yang paling sering muncul</b> atau data dengan frekuensi tertinggi.</p>
+            <div class="formula-box">
+                Modus = Data yang paling populer
+            </div>
+            <ul class="example-list">
+                <li>Data: Merah, Biru, Merah, Hijau, Merah</li>
+                <li>Merah muncul 3 kali, lainnya cuma 1 kali.</li>
+                <li><b>Modus: Merah</b></li>
+            </ul>
+        </div>
+
+        <div class="btn-container">
+            <a href="https://youtu.be/AAsVQDD9-1w?si=ZFMaeIFqPxe354E1" class="btn-3d btn-video">
+                <i class="fas fa-play-circle fa-lg"></i> Tonton Video Seru
+            </a>
+            <a href="quiz_bab8.html" class="btn-3d btn-quiz">
+                <i class="fas fa-pencil-alt fa-lg"></i> Tantangan Kuis Bab 8
+            </a>
+        </div>
+        
+        <a href="nyoba.html" class="btn-back"><i class="fas fa-arrow-left"></i> Kembali ke Petualangan Belajar</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bab 7 - Membandingkan Bangun Datar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --hijau-tua: #2d6a4f;
+            --hijau-bambu: #52b788;
+            --cokelat-muda: #d4a373;
+            --cokelat-tua: #8c7851;
+            --putih-glass: rgba(255, 255, 255, 0.96);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('bg.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            min-height: 100vh; color: #333;
+        }
+
+        .container {
+            max-width: 750px; margin: 40px auto; padding: 20px;
+        }
+
+        .main-card {
+            background: var(--putih-glass); border-radius: 40px; padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 6px solid var(--hijau-bambu);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: var(--hijau-tua); font-weight: 800; margin: 10px 0; font-size: 1.8em; }
+        .header p { color: var(--cokelat-tua); font-weight: 600; }
+
+        .intro-box { 
+            line-height: 1.6; background: #f1f8e9; padding: 20px; 
+            border-radius: 25px; margin-bottom: 30px; border-left: 8px solid var(--hijau-bambu);
+            font-size: 0.95em;
+        }
+
+        /* Styling Tabel Perbandingan */
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin-bottom: 30px;
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .comparison-table th {
+            background: var(--hijau-tua); color: white; padding: 15px; text-align: left;
+        }
+        .comparison-table td {
+            padding: 15px; border-bottom: 1px solid #eee; font-size: 0.9em;
+        }
+        .comparison-table tr:last-child td { border-bottom: none; }
+        .comparison-table tr:nth-child(even) { background: #f9fbf7; }
+
+        .vs-badge {
+            display: inline-block; background: var(--cokelat-muda); color: white;
+            padding: 4px 12px; border-radius: 10px; font-weight: 800; font-size: 0.8em;
+            margin: 10px 0;
+        }
+
+        .highlight-card {
+            background: white; border: 2px dashed var(--hijau-bambu);
+            padding: 20px; border-radius: 25px; margin-bottom: 25px;
+        }
+
+        .highlight-card h3 { color: var(--hijau-tua); margin-top: 0; display: flex; align-items: center; gap: 10px; }
+
+        .btn-container { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        
+        .btn-3d {
+            font-family: 'Poppins', sans-serif; padding: 18px; font-size: 1.1em; font-weight: 700;
+            text-align: center; color: white; border-radius: 20px; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none;
+            transition: 0.2s;
+        }
+        
+        .btn-video { background: var(--cokelat-muda); box-shadow: 0 8px 0 var(--cokelat-tua); color: white; }
+        .btn-video:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--cokelat-tua); }
+        
+        .btn-quiz { background: var(--hijau-bambu); box-shadow: 0 8px 0 var(--hijau-tua); color: white; }
+        .btn-quiz:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--hijau-tua); }
+
+        .btn-back { color: var(--hijau-tua); text-decoration: none; font-weight: 600; display: block; margin-top: 25px; text-align: center; }
+
+        @media (max-width: 600px) {
+            .comparison-table { font-size: 0.8em; }
+            .main-card { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-card">
+        <div class="header">
+            <i class="fas fa-leaf fa-4x" style="color: var(--hijau-bambu);"></i>
+            <h1>Bab 7: Perbandingan Ciri Bangun Datar</h1>
+            <p>Ayo Menjadi Ahli Bentuk di Hutan Matematika!</p>
+        </div>
+
+        <div class="intro-box">
+            <p>Halo Petualang! Di hutan ini, banyak bangun datar yang tampak mirip. Mari kita bandingkan cirinya agar kamu tidak tersesat saat menentukannya!</p>
+        </div>
+
+        <!-- Perbandingan 1 -->
+        <div class="vs-badge">PERBANDINGAN 1</div>
+        <div class="highlight-card">
+            <h3><i class="fas fa-square"></i> Persegi vs Belah Ketupat</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Ciri-Ciri</th>
+                        <th>Persegi</th>
+                        <th>Belah Ketupat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Panjang Sisi</b></td>
+                        <td>Semua sama panjang</td>
+                        <td>Semua sama panjang</td>
+                    </tr>
+                    <tr>
+                        <td><b>Sudut</b></td>
+                        <td>Semua siku-siku (90°)</td>
+                        <td>Sudut berhadapan sama besar</td>
+                    </tr>
+                    <tr>
+                        <td><b>Diagonal</b></td>
+                        <td>Sama panjang & tegak lurus</td>
+                        <td>Tidak sama panjang & tegak lurus</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Perbandingan 2 -->
+        <div class="vs-badge">PERBANDINGAN 2</div>
+        <div class="highlight-card">
+            <h3><i class="fas fa-rectangle-wide"></i> Persegi Panjang vs Jajaran Genjang</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Ciri-Ciri</th>
+                        <th>Persegi Panjang</th>
+                        <th>Jajaran Genjang</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Sisi Berhadapan</b></td>
+                        <td>Sejajar & sama panjang</td>
+                        <td>Sejajar & sama panjang</td>
+                    </tr>
+                    <tr>
+                        <td><b>Sudut</b></td>
+                        <td>Semua siku-siku (90°)</td>
+                        <td>Sudut berhadapan sama besar</td>
+                    </tr>
+                    <tr>
+                        <td><b>Simetri Lipat</b></td>
+                        <td>Memiliki 2 simetri</td>
+                        <td>Tidak memiliki simetri lipat</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="btn-container">
+            <a href="https://youtu.be/LP7Py8LSNCQ?si=0G3o4ThztAkR1Fd8" class="btn-3d btn-video">
+                <i class="fas fa-play-circle fa-lg"></i> Tonton Video Seru
+            </a>
+            <a href="quiz_bab7.html" class="btn-3d btn-quiz">
+                <i class="fas fa-leaf fa-lg"></i> Tantangan Kuis Bab 7
+            </a>
+        </div>
+        
+       <a href="nyoba.html" class="btn-back"><i class="fas fa-arrow-left"></i> Kembali ke Petualangan Belajar</a>
+    </div>
+</div>
+
+</body>
+</html>

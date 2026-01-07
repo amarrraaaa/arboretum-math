@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panda Math Adventure - 10 Tantangan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --bamboo-green: #2ecc71;
+            --bamboo-dark: #27ae60;
+            --wood-brown: #795548;
+            --wood-dark: #4e342e;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(240, 253, 244, 0.8), rgba(240, 253, 244, 0.8)), url('https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed;
+            min-height: 100vh; 
+            margin: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px;
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            width: 100%; 
+            max-width: 1000px; 
+            min-height: 600px; 
+            padding: 3.5rem; 
+            border-radius: 40px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            border: 6px solid var(--wood-brown); 
+            text-align: center; 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .btn-back {
+            position: fixed; top: 20px; left: 20px;
+            background: var(--wood-brown); color: white;
+            padding: 10px 20px; border-radius: 15px;
+            text-decoration: none; font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 0 var(--wood-dark); z-index: 100;
+        }
+
+        .menu-card {
+            background: white; border: 3px solid #e2e8f0;
+            padding: 30px; border-radius: 25px; transition: all 0.3s;
+            cursor: pointer; display: flex; flex-direction: column; align-items: center;
+            height: 100%;
+        }
+
+        .menu-card:hover {
+            border-color: var(--bamboo-green); transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(46, 204, 113, 0.25);
+        }
+
+        .stats-bar {
+            display: flex; justify-content: space-around;
+            background: #f8fafc; padding: 20px; border-radius: 25px;
+            margin-bottom: 30px; border: 2px dashed var(--wood-brown);
+            align-items: center;
+        }
+
+        .question-box {
+            font-size: 3.5rem; 
+            font-weight: 800; color: var(--wood-dark);
+            margin: 30px 0; min-height: 100px; display: flex; align-items: center; justify-content: center;
+        }
+
+        .option-btn {
+            background: white; border: 3px solid #e2e8f0;
+            padding: 20px; border-radius: 20px; font-size: 1.5rem;
+            font-weight: 700; cursor: pointer; transition: all 0.2s;
+            color: var(--wood-dark); box-shadow: 0 6px 0 #e2e8f0;
+        }
+
+        .option-btn:active { transform: translateY(4px); box-shadow: none; }
+
+        .correct { background: var(--bamboo-green) !important; color: white !important; border-color: var(--bamboo-dark) !important; }
+        .wrong { background: #ef4444 !important; color: white !important; border-color: #991b1b !important; }
+
+        .panda-mascot {
+            font-size: 6rem; 
+            position: absolute;
+            top: -85px; left: 50%; transform: translateX(-50%);
+            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.25));
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" onclick="location.reload()" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Kembali
+    </a>
+
+    <div class="game-container">
+        <div class="panda-mascot" id="panda-emoji">🐼</div>
+
+        <!-- MENU UTAMA -->
+        <div id="main-menu">
+            <h1 class="text-4xl font-extrabold text-wood-dark mb-4">Pilih Tantangan Kelas 5!</h1>
+            <p class="text-xl text-gray-600 mb-12">Selesaikan 10 tant untuk memenangkan misi</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="menu-card" onclick="startGame('quiz')">
+                    <div class="text-6xl mb-4">🔢</div>
+                    <h3 class="font-bold text-xl">Operasi Cacah</h3>
+                    <p class="text-sm text-center text-gray-500 mt-2">Penjumlahan & Pengurangan Bilangan Besar</p>
+                </div>
+                <div class="menu-card" onclick="startGame('decimal')">
+                    <div class="text-6xl mb-4">✨</div>
+                    <h3 class="font-bold text-xl">Desimal Kilat</h3>
+                    <p class="text-sm text-center text-gray-500 mt-2">Hitung cepat perkalian & pembagian desimal</p>
+                </div>
+                <div class="menu-card" onclick="startGame('compare')">
+                    <div class="text-6xl mb-4">⚖️</div>
+                    <h3 class="font-bold text-xl">Banding Nilai</h3>
+                    <p class="text-sm text-center text-gray-500 mt-2">Membandingkan nilai angka hingga jutaan</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LAYAR GAME -->
+        <div id="game-screen" class="hidden">
+            <div class="stats-bar text-xl font-bold">
+                <div class="bg-blue-100 px-4 py-1 rounded-full text-blue-700">Soal: <span id="q-counter">1</span>/10</div>
+                <div><i class="fas fa-star text-yellow-500"></i> Skor: <span id="score">0</span></div>
+                <div><i class="fas fa-heart text-red-500"></i> <span id="lives">3</span></div>
+                <button onclick="backToMenu()" class="text-sm font-bold bg-red-50 px-3 py-1 rounded-lg text-red-400">MENU</button>
+            </div>
+
+            <p class="text-lg font-bold text-green-600 uppercase tracking-widest mb-2" id="game-title-label">GAME</p>
+            <div class="question-box" id="question-text">?</div>
+
+            <div id="options-area" class="grid grid-cols-2 gap-6 hidden"></div>
+
+            <div id="input-area" class="hidden max-w-md mx-auto">
+                <input type="text" id="user-input" autocomplete="off" class="w-full text-center text-4xl border-4 border-gray-200 rounded-3xl p-4 focus:border-green-500 outline-none transition-all" placeholder="0">
+                <button onclick="checkInputAnswer()" class="mt-6 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-5 rounded-2xl shadow-xl transition-all active:scale-95 text-xl">KIRIM</button>
+            </div>
+
+            <div id="feedback" class="mt-8 font-bold text-2xl h-10"></div>
+        </div>
+
+        <!-- MODAL SELESAI -->
+        <div id="gameOverModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-[1000] p-4">
+            <div class="bg-white p-12 rounded-[50px] text-center max-w-md w-full shadow-2xl">
+                <div class="text-8xl mb-6" id="finish-icon">🏆</div>
+                <h2 class="text-4xl font-extrabold text-wood-dark mb-4" id="finish-title">Misi Selesai!</h2>
+                <p class="text-xl text-gray-500 mb-2">Total Skor Akhir:</p>
+                <div class="text-7xl font-black text-green-600 mb-10" id="finalScore">0</div>
+                <button onclick="backToMenu()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-5 px-10 rounded-full shadow-xl transition-transform hover:scale-105 text-xl">
+                    Main Lagi 🎋
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let lives = 3;
+        let questionCount = 0;
+        const totalQuestions = 10;
+        let currentGameMode = '';
+        let currentAnswer = "";
+        const pandaEmoji = document.getElementById('panda-emoji');
+
+        function startGame(mode) {
+            score = 0;
+            lives = 3;
+            questionCount = 0;
+            currentGameMode = mode;
+            updateStats();
+            
+            document.getElementById('main-menu').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('gameOverModal').classList.add('hidden');
+            
+            nextQuestion();
+        }
+
+        function backToMenu() {
+            document.getElementById('main-menu').classList.remove('hidden');
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('gameOverModal').classList.add('hidden');
+            pandaEmoji.innerText = "🐼";
+        }
+
+        function nextQuestion() {
+            if (questionCount >= totalQuestions) {
+                endGame("win");
+                return;
+            }
+            questionCount++;
+            updateStats();
+            generateQuestion();
+        }
+
+        function generateQuestion() {
+            const qText = document.getElementById('question-text');
+            const feedback = document.getElementById('feedback');
+            const optionsArea = document.getElementById('options-area');
+            const inputArea = document.getElementById('input-area');
+            
+            feedback.innerText = "";
+            optionsArea.innerHTML = "";
+            optionsArea.classList.add('hidden');
+            inputArea.classList.add('hidden');
+
+            if (currentGameMode === 'quiz') {
+                document.getElementById('game-title-label').innerText = "OPERASI CACAH";
+                optionsArea.classList.remove('hidden');
+                let a = Math.floor(Math.random() * 8000) + 1000;
+                let b = Math.floor(Math.random() * 5000) + 500;
+                let op = Math.random() > 0.5 ? '+' : '-';
+                if (op === '+') currentAnswer = a + b;
+                else { if (a < b) [a, b] = [b, a]; currentAnswer = a - b; }
+                qText.innerText = `${a.toLocaleString('id-ID')} ${op} ${b.toLocaleString('id-ID')} = ?`;
+                setupOptions(currentAnswer, 200);
+            } 
+            else if (currentGameMode === 'decimal') {
+                document.getElementById('game-title-label').innerText = "DESIMAL KILAT";
+                inputArea.classList.remove('hidden');
+                document.getElementById('user-input').value = "";
+                document.getElementById('user-input').focus();
+                
+                let type = Math.floor(Math.random() * 3);
+                if (type === 0) { 
+                    let a = (Math.floor(Math.random() * 20) + 1);
+                    currentAnswer = (a * 0.5).toString();
+                    qText.innerText = `${a} × 0,5 = ?`;
+                } else if (type === 1) { 
+                    let a = (Math.random() * 5).toFixed(1);
+                    let b = (Math.random() * 3).toFixed(1);
+                    currentAnswer = (parseFloat(a) + parseFloat(b)).toFixed(1).toString();
+                    qText.innerText = `${a.replace('.',',')} + ${b.replace('.',',')} = ?`;
+                } else { 
+                    let a = (Math.floor(Math.random() * 12) + 1);
+                    currentAnswer = (a / 2).toString();
+                    qText.innerText = `${a} : 2 = ?`;
+                }
+            }
+            else if (currentGameMode === 'compare') {
+                document.getElementById('game-title-label').innerText = "BANDING NILAI";
+                optionsArea.classList.remove('hidden');
+                optionsArea.className = "grid grid-cols-3 gap-6";
+                let a = Math.floor(Math.random() * 2000000);
+                let b = Math.floor(Math.random() * 2000000);
+                qText.innerHTML = `<span class="text-blue-600">${a.toLocaleString('id-ID')}</span> ... <span class="text-red-600">${b.toLocaleString('id-ID')}</span>`;
+                ['<', '=', '>'].forEach(op => {
+                    const btn = document.createElement('button');
+                    btn.className = "option-btn text-4xl";
+                    btn.innerText = op;
+                    btn.onclick = () => {
+                        let isCorrect = (op === '<' && a < b) || (op === '=' && a === b) || (op === '>' && a > b);
+                        processAnswer(isCorrect, btn);
+                    };
+                    optionsArea.appendChild(btn);
+                });
+            }
+        }
+
+        function setupOptions(correct, range) {
+            const container = document.getElementById('options-area');
+            container.className = "grid grid-cols-2 gap-6";
+            let options = [correct];
+            while(options.length < 4) {
+                let wrong = correct + (Math.floor(Math.random() * range) - (range/2));
+                if(wrong > 0 && !options.includes(wrong) && wrong !== correct) options.push(wrong);
+            }
+            options.sort(() => Math.random() - 0.5);
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "option-btn";
+                btn.innerText = opt.toLocaleString('id-ID');
+                btn.onclick = () => processAnswer(opt === correct, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkInputAnswer() {
+            let userVal = document.getElementById('user-input').value.replace(',', '.').trim();
+            if(userVal === "") return;
+            processAnswer(parseFloat(userVal).toString() === parseFloat(currentAnswer).toString());
+        }
+
+        function processAnswer(isCorrect, btn = null) {
+            const feedback = document.getElementById('feedback');
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.style.pointerEvents = 'none');
+
+            if (isCorrect) {
+                score += 10;
+                if(btn) btn.classList.add('correct');
+                feedback.innerText = "Benar! Bagus Sekali! 🌟";
+                feedback.className = "mt-8 font-bold text-2xl h-10 text-green-600";
+                pandaEmoji.innerText = "🤩";
+            } else {
+                lives--;
+                if(btn) btn.classList.add('wrong');
+                feedback.innerText = `Salah! Jawaban: ${currentAnswer.toString().replace('.',',')}`;
+                feedback.className = "mt-8 font-bold text-2xl h-10 text-red-500";
+                pandaEmoji.innerText = "😰";
+            }
+
+            updateStats();
+
+            setTimeout(() => {
+                if (lives <= 0) {
+                    endGame("lose");
+                } else if (questionCount >= totalQuestions) {
+                    endGame("win");
+                } else {
+                    pandaEmoji.innerText = "🐼";
+                    allBtns.forEach(b => b.style.pointerEvents = 'auto');
+                    nextQuestion();
+                }
+            }, 1500);
+        }
+
+        function updateStats() {
+            document.getElementById('score').innerText = score;
+            document.getElementById('lives').innerText = lives;
+            document.getElementById('q-counter').innerText = Math.min(questionCount, totalQuestions);
+        }
+
+        function endGame(status) {
+            const title = document.getElementById('finish-title');
+            const icon = document.getElementById('finish-icon');
+            
+            if (status === "win") {
+                title.innerText = "Misi Selesai!";
+                icon.innerText = "🏆";
+            } else {
+                title.innerText = "Permainan Berakhir";
+                icon.innerText = "🎋";
+            }
+            
+            document.getElementById('finalScore').innerText = score;
+            document.getElementById('gameOverModal').classList.remove('hidden');
+        }
+
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && currentGameMode === 'decimal') checkInputAnswer();
+        });
+    </script>
+</body>
+</html>

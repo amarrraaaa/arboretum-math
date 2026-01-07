@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Card Matematika Kelas 2 SD - Full Theme</title>
+  <link rel="icon" href="logo.png">
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #1B4332; 
+      --color-secondary: #2D6A4F; 
+      --color-accent: #52B788; 
+      --color-light: #D8F3DC; 
+      --color-bg: #F7FBF9; 
+      --color-text: #081C15;
+      --color-shadow: rgba(0, 0, 0, 0.2);
+      --color-success: #40916C;
+      --color-warning: #FFB703;
+      --color-gold: #FFD700;
+      --color-danger: #E21B3C;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      /* MENAMBAHKAN BACKGROUND GAMBAR DENGAN OVERLAY */
+      background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('./image/bg2.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Background Particles melayang di atas gambar background */
+    .particle-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
+    }
+    .particle {
+      position: absolute; background: var(--color-accent);
+      border-radius: 50%; opacity: 0.3; animation: floatParticle 12s infinite linear;
+    }
+    @keyframes floatParticle {
+      0% { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.4; }
+      90% { opacity: 0.4; }
+      100% { transform: translateY(-10vh) translateX(50px) rotate(360deg); opacity: 0; }
+    }
+
+    .game-container {
+      position: relative; z-index: 2; width: 100%; max-width: 900px;
+      padding: 2rem 1rem; display: flex; flex-direction: column; align-items: center;
+    }
+
+    /* Glassmorphism Header */
+    .game-header { 
+        text-align: center; margin-bottom: 2rem; 
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px; border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .game-title {
+      font-size: 2.8rem; font-weight: 800; color: white;
+      text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+    }
+    .game-subtitle {
+        color: var(--color-light); font-weight: 500; font-size: 1.1rem;
+    }
+
+    /* Level Selection Card */
+    .level-selection {
+      background: white; padding: 2rem; border-radius: 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3); width: 100%; max-width: 850px;
+      margin-bottom: 2rem; border: 4px solid var(--color-accent);
+    }
+    .level-selection h2 {
+      font-size: 1.5rem; font-weight: 800; color: var(--color-primary);
+      text-align: center; margin-bottom: 1.5rem; text-transform: uppercase;
+    }
+    .level-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .level-card {
+      background: var(--color-bg); padding: 1.5rem; border-radius: 25px;
+      border: 3px solid var(--color-light); cursor: pointer; transition: 0.4s;
+      text-align: center; box-shadow: 0 5px 15px var(--color-shadow);
+    }
+    .level-card:hover { transform: translateY(-10px); border-color: var(--color-accent); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+    .level-card.active {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      color: white; border-color: var(--color-warning);
+    }
+    .level-icon { font-size: 3.5rem; margin-bottom: 10px; display: block; }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex; gap: 1.2rem; margin-bottom: 2rem; width: 100%; max-width: 800px;
+      justify-content: center;
+    }
+    .stat-box {
+      background: white; padding: 12px 25px; border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2); text-align: center; min-width: 140px;
+      border-bottom: 4px solid var(--color-accent);
+    }
+    .stat-label { font-size: 0.8rem; font-weight: 800; color: var(--color-secondary); text-transform: uppercase; }
+    .stat-value { font-size: 1.8rem; font-weight: 800; color: var(--color-primary); }
+
+    /* Memory Board */
+    .game-board {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem;
+      width: 100%; max-width: 800px; perspective: 1200px;
+    }
+    .memory-card {
+      aspect-ratio: 1; position: relative; transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); cursor: pointer;
+    }
+    .memory-card.flip { transform: rotateY(180deg); }
+    
+    /* KARTU COCOK TETAP TERBUKA */
+    .memory-card.matched {
+      transform: rotateY(180deg);
+      cursor: default !important;
+      pointer-events: none;
+    }
+
+    .card-face {
+      position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+      border-radius: 20px; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .card-back {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      color: white; border: 4px solid white;
+    }
+    .card-back-icon { font-size: 3.5rem; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3)); }
+
+    .card-front {
+      background: white; transform: rotateY(180deg);
+      border: 5px solid var(--color-accent); padding: 15px;
+    }
+    .memory-card.matched .card-front {
+      background: var(--color-light);
+      border-color: var(--color-success);
+      box-shadow: 0 0 25px var(--color-success);
+    }
+
+    .card-content { font-size: 2rem; font-weight: 800; color: var(--color-primary); text-align: center; }
+    .is-icon { font-size: 4rem; }
+
+    /* Navigation Buttons */
+    .btn-group { margin-top: 2.5rem; display: flex; gap: 1.5rem; }
+    .btn {
+      padding: 15px 40px; border-radius: 50px; font-weight: 800; cursor: pointer;
+      border: none; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    }
+    .btn-play { background: var(--color-warning); color: var(--color-primary); }
+    .btn-reset { background: var(--color-danger); color: white; }
+    .btn:hover { transform: translateY(-5px) scale(1.05); filter: brightness(1.1); }
+
+    /* Victory Overlay */
+    .success-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(8, 28, 21, 0.95); display: none; z-index: 3000;
+      align-items: center; justify-content: center; backdrop-filter: blur(15px);
+    }
+    .success-box {
+      background: white; padding: 4rem 3rem; border-radius: 40px; text-align: center;
+      max-width: 500px; border: 10px solid var(--color-light);
+      animation: scaleUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes scaleUp { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    @media (max-width: 650px) {
+      .game-board { grid-template-columns: repeat(3, 1fr); }
+      .level-grid { grid-template-columns: 1fr; }
+      .game-title { font-size: 2rem; }
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+ </head>
+ <body>
+  
+  <div class="particle-container" id="particleContainer"></div>
+
+  <main class="game-container">
+    <div class="game-header">
+      <h1 class="game-title">MEMORY MATEMATIKA</h1>
+      <p class="game-subtitle">Edisi Arboretum Bambu Kelas 2 SD</p>
+    </div>
+
+    <section class="level-selection">
+      <h2>Pilih Tantangan Belajarmu:</h2>
+      <div class="level-grid">
+        <div class="level-card active" data-level="numbers" onclick="selectLevel('numbers')">
+          <span class="level-icon">🔢</span>
+          <div class="font-extrabold text-xl">ANGKA</div>
+          <p class="text-sm mt-1">Penjumlahan & Pengurangan</p>
+        </div>
+        <div class="level-card" data-level="shapes" onclick="selectLevel('shapes')">
+          <span class="level-icon">📐</span>
+          <div class="font-extrabold text-xl">BENTUK</div>
+          <p class="text-sm mt-1">Cari Nama Bangun Datar</p>
+        </div>
+        <div class="level-card" data-level="mixed" onclick="selectLevel('mixed')">
+          <span class="level-icon">🌟</span>
+          <div class="font-extrabold text-xl">CAMPURAN</div>
+          <p class="text-sm mt-1">Gabungan Semua Materi</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="stats-bar">
+      <div class="stat-box">
+        <div class="stat-label">⏱️ WAKTU</div>
+        <div class="stat-value" id="timer">00:00</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🎋 SKOR</div>
+        <div class="stat-value" id="score">0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">👣 LANGKAH</div>
+        <div class="stat-value" id="moves">0</div>
+      </div>
+    </div>
+
+    <div class="game-board" id="gameBoard"></div>
+
+    <div class="btn-group">
+      <button class="btn btn-play" onclick="startGame()">▶️ MULAI BERMAIN</button>
+      <button class="btn btn-reset" onclick="resetGame()">🔄 RESET ULANG</button>
+    </div>
+  </main>
+
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-box">
+      <div style="font-size: 6rem; margin-bottom: 1rem;">🌳</div>
+      <h2 class="text-4xl font-black text-green-900 mb-2">HEBAT SEKALI!</h2>
+      <p class="text-gray-600 mb-6 text-xl">Kamu berhasil merawat taman bambu!</p>
+      <div class="bg-green-100 p-6 rounded-3xl mb-8">
+        <div class="flex justify-between text-xl font-bold text-green-800 mb-2">
+            <span>🎋 Skor Akhir:</span><span id="fScore">0</span>
+        </div>
+        <div class="flex justify-between text-xl font-bold text-green-800 mb-2">
+            <span>⏱️ Waktu:</span><span id="fTime">0</span>
+        </div>
+        <div class="flex justify-between text-xl font-bold text-green-800">
+            <span>👣 Langkah:</span><span id="fMoves">0</span>
+        </div>
+      </div>
+      <button class="btn btn-play w-full py-5 text-2xl" onclick="startGame()">MAIN LAGI 🎮</button>
+    </div>
+  </div>
+
+  <script>
+    // --- DATA LENGKAP JANGAN DIHAPUS ---
+    const numbersLevel = [
+      { id: 1, display: '2 + 3', answer: '5' }, { id: 2, display: '5', answer: '5' },
+      { id: 3, display: '4 + 4', answer: '8' }, { id: 4, display: '8', answer: '8' },
+      { id: 5, display: '5 + 2', answer: '7' }, { id: 6, display: '7', answer: '7' },
+      { id: 7, display: '3 + 6', answer: '9' }, { id: 8, display: '9', answer: '9' },
+      { id: 9, display: '10 - 4', answer: '6' }, { id: 10, display: '6', answer: '6' },
+      { id: 11, display: '8 - 3', answer: '5-b' }, { id: 12, display: '5', answer: '5-b' },
+      { id: 13, display: '9 - 2', answer: '7-b' }, { id: 14, display: '7', answer: '7-b' },
+      { id: 15, display: '7 - 3', answer: '4' }, { id: 16, display: '4', answer: '4' }
+    ];
+
+    const shapesLevel = [
+      { id: 1, display: '⭕', answer: 'circle', isIcon: true }, { id: 2, display: 'Lingkaran', answer: 'circle' },
+      { id: 3, display: '⬛', answer: 'square', isIcon: true }, { id: 4, display: 'Persegi', answer: 'square' },
+      { id: 5, display: '🔺', answer: 'triangle', isIcon: true }, { id: 6, display: 'Segitiga', answer: 'triangle' },
+      { id: 7, display: '⬜', answer: 'rectangle', isIcon: true }, { id: 8, display: 'P. Panjang', answer: 'rectangle' },
+      { id: 9, display: '⭐', answer: 'star', isIcon: true }, { id: 10, display: 'Bintang', answer: 'star' },
+      { id: 11, display: '💠', answer: 'diamond', isIcon: true }, { id: 12, display: 'Ketupat', answer: 'diamond' },
+      { id: 13, display: '🔶', answer: 'rhombus', isIcon: true }, { id: 14, display: 'J. Genjang', answer: 'rhombus' },
+      { id: 15, display: '❤️', answer: 'heart', isIcon: true }, { id: 16, display: 'Hati', answer: 'heart' }
+    ];
+
+    const mixedLevel = [
+      { id: 1, display: '🍎', answer: 'apple', isIcon: true }, { id: 2, display: 'Apel', answer: 'apple' },
+      { id: 3, display: '🌞', answer: 'sun', isIcon: true }, { id: 4, display: 'Matahari', answer: 'sun' },
+      { id: 5, display: '🔴', answer: 'red', isIcon: true }, { id: 6, display: 'Merah', answer: 'red' },
+      { id: 7, display: '🔵', answer: 'blue', isIcon: true }, { id: 8, display: 'Biru', answer: 'blue' },
+      { id: 9, display: '🐱', answer: 'cat', isIcon: true }, { id: 10, display: 'Kucing', answer: 'cat' },
+      { id: 11, display: '🌸', answer: 'flower', isIcon: true }, { id: 12, display: 'Bunga', answer: 'flower' },
+      { id: 13, display: '🎈', answer: 'balloon', isIcon: true }, { id: 14, display: 'Balon', answer: 'balloon' },
+      { id: 15, display: '⚽', answer: 'ball', isIcon: true }, { id: 16, display: 'Bola', answer: 'ball' }
+    ];
+
+    const levels = { numbers: numbersLevel, shapes: shapesLevel, mixed: mixedLevel };
+
+    // --- GAME LOGIC ENGINE ---
+    let isActive = false;
+    let flippedCards = [];
+    let matchCounter = 0;
+    let currentScore = 0;
+    let currentMoves = 0;
+    let currentLevelKey = 'numbers';
+    let gameTimer;
+    let timerSeconds = 0;
+    let isProcessing = false;
+
+    // Background Particle Generator
+    const particleContainer = document.getElementById('particleContainer');
+    for(let i=0; i<20; i++){
+        let particle = document.createElement('div');
+        particle.className = 'particle';
+        let size = Math.random()*25 + 10;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.left = Math.random()*100 + '%';
+        particle.style.animationDuration = Math.random()*5 + 8 + 's';
+        particle.style.animationDelay = Math.random()*5 + 's';
+        particleContainer.appendChild(particle);
+    }
+
+    function selectLevel(level){
+        currentLevelKey = level;
+        document.querySelectorAll('.level-card').forEach(c => c.classList.remove('active'));
+        document.querySelector(`[data-level="${level}"]`).classList.add('active');
+        resetGame();
+    }
+
+    function startGame(){
+        resetGame();
+        isActive = true;
+        startTimer();
+        
+        const board = document.getElementById('gameBoard');
+        const shuffledData = [...levels[currentLevelKey]].sort(() => Math.random() - 0.5);
+        
+        shuffledData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'memory-card';
+            card.dataset.id = item.answer;
+            card.innerHTML = `
+                <div class="card-face card-back"><span class="card-back-icon">🎋</span></div>
+                <div class="card-face card-front">
+                    <div class="card-content ${item.isIcon ? 'is-icon' : ''}">${item.display}</div>
+                </div>
+            `;
+            card.addEventListener('click', () => flipCard(card));
+            board.appendChild(card);
+        });
+    }
+
+    function flipCard(card){
+        if(!isActive || isProcessing || card.classList.contains('flip') || card.classList.contains('matched')) return;
+        
+        card.classList.add('flip');
+        flippedCards.push(card);
+
+        if(flippedCards.length === 2){
+            currentMoves++;
+            document.getElementById('moves').innerText = currentMoves;
+            checkMatch();
+        }
+    }
+
+    function checkMatch(){
+        isProcessing = true;
+        const [card1, card2] = flippedCards;
+        
+        if(card1.dataset.id === card2.dataset.id){
+            // PASANGAN COCOK
+            card1.classList.add('matched');
+            card2.classList.add('matched');
+            matchCounter++;
+            currentScore += 25;
+            document.getElementById('score').innerText = currentScore;
+            flippedCards = [];
+            isProcessing = false;
+            
+            // CEK APAKAH MENANG
+            if(matchCounter === levels[currentLevelKey].length / 2) endGame();
+        } else {
+            // TIDAK COCOK - TUTUP KEMBALI
+            setTimeout(() => {
+                card1.classList.remove('flip');
+                card2.classList.remove('flip');
+                flippedCards = [];
+                isProcessing = false;
+            }, 1000);
+        }
+    }
+
+    function startTimer(){
+        clearInterval(gameTimer);
+        timerSeconds = 0;
+        gameTimer = setInterval(() => {
+            timerSeconds++;
+            let mm = Math.floor(timerSeconds/60).toString().padStart(2,'0');
+            let ss = (timerSeconds%60).toString().padStart(2,'0');
+            document.getElementById('timer').innerText = `${mm}:${ss}`;
+        }, 1000);
+    }
+
+    function resetGame(){
+        isActive = false;
+        isProcessing = false;
+        clearInterval(gameTimer);
+        timerSeconds = 0;
+        currentScore = 0;
+        currentMoves = 0;
+        matchCounter = 0;
+        flippedCards = [];
+        document.getElementById('timer').innerText = "00:00";
+        document.getElementById('score').innerText = "0";
+        document.getElementById('moves').innerText = "0";
+        document.getElementById('gameBoard').innerHTML = "";
+        document.getElementById('successOverlay').style.display = "none";
+    }
+
+    function endGame(){
+        isActive = false;
+        clearInterval(gameTimer);
+        document.getElementById('fScore').innerText = currentScore;
+        document.getElementById('fTime').innerText = document.getElementById('timer').innerText;
+        document.getElementById('fMoves').innerText = currentMoves;
+        document.getElementById('successOverlay').style.display = "flex";
+    }
+  </script>
+ </body>
+</html>

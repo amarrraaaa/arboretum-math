@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematika SD Kelas 2</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-primary: #1B4332; 
+            --color-secondary: #2D6A4F; 
+            --color-accent: #52B788; 
+            --color-light: #D8F3DC; 
+            --color-bg: #F7FBF9; 
+            --color-text: #081C15;
+            --color-shadow: rgba(45, 106, 79, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            overflow-x: hidden; 
+        }
+
+        /* ---------------------------------------------------------- */
+        /* NEW: PRE-LANDING WELCOME SECTION (RIGHT ALIGNED) */
+        /* ---------------------------------------------------------- */
+        #welcome-screen {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* Memindahkan konten ke kanan */
+            padding: 0 8%;
+            color: white;
+            z-index: 1100;
+        }
+
+        .welcome-box {
+            text-align: right; /* Teks rata kanan */
+            max-width: 650px;
+            animation: slideInRight 1.2s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* Button & konten rata kanan */
+        }
+
+        .welcome-box span {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .welcome-box h0 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            display: block;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            margin-bottom: 20px;
+        }
+
+        .welcome-box p {
+            font-size: 1.2rem;
+            margin-bottom: 35px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .btn-mulai {
+            background-color: var(--color-accent);
+            color: white;
+            text-decoration: none;
+            padding: 18px 50px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 3px solid transparent;
+        }
+
+        .btn-mulai:hover {
+            transform: scale(1.05) translateY(-5px);
+            background-color: white;
+            color: var(--color-primary);
+            border-color: var(--color-accent);
+        }
+
+        @keyframes slideInRight { 
+            from { transform: translateX(150px); opacity: 0; } 
+            to { transform: translateX(0); opacity: 1; } 
+        }
+
+        /* ---------------------------------------------------------- */
+        /* 1. HEADER (Hero Section) */
+        /* ---------------------------------------------------------- */
+        .navbar {
+            background: linear-gradient(rgba(27, 67, 50, 0.85), rgba(27, 67, 50, 0.85)), url('./image/bg2.jpg'); 
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center; 
+            min-height: 80vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-direction: column; 
+            padding: 20px;
+        }
+
+        .navbar h1 {
+            font-size: 3.5rem; 
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .navbar p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #game-link {
+            background-color: var(--color-accent);
+            border: none;
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+        #game-link:hover { transform: scale(1.1); background-color: white; color: var(--color-primary); }
+
+        /* ---------------------------------------------------------- */
+        /* 2. TUJUAN PEMBELAJARAN SECTION */
+        /* ---------------------------------------------------------- */
+        .tujuan-section {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px var(--color-shadow);
+            border-left: 10px solid var(--color-accent);
+        }
+
+        .tujuan-section h2 {
+            color: var(--color-primary);
+            font-size: 1.8rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tujuan-section p {
+            line-height: 1.8;
+            color: #444;
+            font-size: 1.05rem;
+        }
+
+        .tujuan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .tujuan-item {
+            background: var(--color-bg);
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            border: 1px solid var(--color-light);
+            display: flex;
+            gap: 10px;
+        }
+
+        .tujuan-item i { color: var(--color-accent); margin-top: 4px; }
+
+        /* ---------------------------------------------------------- */
+        /* 3. GRID LAYOUT (Bab Card 4x2) */
+        /* ---------------------------------------------------------- */
+        .content-container {
+            max-width: 1400px; 
+            margin: 0 auto 100px;
+            padding: 0 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 20px;
+        }
+
+        .modul-bar {
+            background-color: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 20px var(--color-shadow);
+            border: 1px solid var(--color-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .modul-bar:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(45, 106, 79, 0.25);
+            border-color: var(--color-accent);
+        }
+
+        .modul-icon {
+            font-size: 2.5rem;
+            color: var(--color-secondary);
+            margin-bottom: 15px;
+            background: var(--color-light);
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            border-radius: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .modul-content h2 {
+            font-size: 1.1rem;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .modul-content p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        /* ---------------------------------------------------------- */
+        /* 4. BUTTONS & UTILS */
+        /* ---------------------------------------------------------- */
+        .btn { 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            transition: 0.3s; 
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .btn-bab { background-color: var(--color-secondary); color: white; width: 100%; justify-content: center; }
+        .btn-bab:hover { background-color: var(--color-primary); }
+        .btn-primary { background-color: var(--color-accent); color: white; padding: 15px 35px; font-size: 1.1rem; }
+
+        footer { background: var(--color-primary); color: white; padding: 40px 20px; text-align: center; margin-top: 50px; }
+        
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: white; margin: 10% auto; padding: 30px; border-radius: 20px; max-width: 500px; position: relative;
+        }
+
+        /* ---------------------------------------------------------- */
+        /* RESPONSIVE */
+        /* ---------------------------------------------------------- */
+        @media (max-width: 1200px) {
+            .grid-container { grid-template-columns: repeat(3, 1fr); } 
+        }
+        @media (max-width: 900px) {
+            .grid-container { grid-template-columns: repeat(2, 1fr); } 
+            #welcome-screen { justify-content: center; text-align: center; padding: 0 20px; }
+            .welcome-box { text-align: center; align-items: center; }
+            .welcome-box h0 { font-size: 3rem; }
+        }
+        @media (max-width: 600px) {
+            .grid-container { grid-template-columns: 1fr; } 
+            .navbar h1 { font-size: 2.2rem; }
+            .hero-actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="click-sound" src="click.mp3" preload="auto"></audio> 
+    
+    <section id="welcome-screen">
+        <div class="welcome-box">
+            <span>Selamat Datang di</span>
+            <h0>Arboretum<br>Bambu</h0>
+            <p>Belajar Matematika Jadi Lebih Menyenangkan,<br>Nyata, dan Interaktif!</p>
+            <a href="#belajar-start" class="btn-mulai" id="btn-explore">Mulai <i class="fas fa-chevron-right"></i></a>
+        </div>
+    </section>
+
+    <div id="belajar-start"></div>
+
+    <header class="navbar">
+        <h1>Matematika Seru!</h1>
+        <p>Ayo jelajahi dunia angka dengan cara yang menyenangkan!</p>
+        <div class="hero-actions">
+            <a href="#tujuan" class="btn btn-primary">Mulai Pembelajaran <i class="fas fa-arrow-right"></i></a>
+            <a href="game.html" id="game-link" title="Mainkan Game"><i class="fas fa-gamepad"></i></a>
+        </div>
+    </header>
+
+    <section class="tujuan-section" id="tujuan">
+        <h2><i class="fas fa-bullseye"></i> Tujuan Pembelajaran</h2>
+        <p>
+            Melalui media pembelajaran interaktif berbasis kearifan lokal ini, siswa diharapkan mampu memahami konsep dasar 
+            matematika seperti pengenalan bilangan, operasi hitung, geometri, serta pengukuran. Pembelajaran diintegrasikan dengan 
+            pengamatan langsung di lingkungan <strong>Arboretum Bambu</strong> untuk memberikan pengalaman belajar yang nyata, 
+            kontekstual, dan bermakna bagi siswa kelas 2 Sekolah Dasar.
+        </p>
+        <div class="tujuan-grid">
+            <div class="tujuan-item"><i class="fas fa-check-circle"></i> Memahami bilangan 1-100 melalui objek di alam.</div>
+            <div class="tujuan-item"><i class="fas fa-check-circle"></i> Menguasai operasi hitung dengan media batang bambu.</div>
+            <div class="tujuan-item"><i class="fas fa-check-circle"></i> Mengenali bentuk geometri dari struktur tanaman bambu.</div>
+            <div class="tujuan-item"><i class="fas fa-check-circle"></i> Melakukan pengukuran berat dan waktu secara praktis.</div>
+        </div>
+    </section>
+
+    <main class="content-container" id="belajar">
+        <div class="grid-container">
+            <section class="modul-bar" id="modul-1">
+                <div>
+                    <div class="modul-icon"><i class="fas fa-sort-numeric-up"></i></div>
+                    <div class="modul-content">
+                        <h2>Bab 1: Membilang 1-50</h2>
+                        <p>Mari mengenal angka dari satu sampai lima puluh.</p>
+                    </div>
+                </div>
+                <a href="bab1.html" class="btn btn-bab">Belajar <i class="fas fa-play"></i></a>
+            </section>
+
+            <section class="modul-bar" id="modul-2">
+                <div>
+                    <div class="modul-icon"><i class="fas fa-plus"></i></div>
+                    <div class="modul-content">
+                        <h2>Bab 2: Penjumlahan</h2>
+                        <p>Belajar cara menjumlahkan angka dengan mudah.</p>
+                    </div>
+                </div>
+                <a href="bab2.html" class="btn btn-bab">Belajar <i class="fas fa-play"></i></a>
+            </section>
+
+            <section class="modul-bar" id="modul-3">
+                <div>
+                    <div class="modul-icon"><i class="fas fa-shapes"></i></div>
+                    <div class="modul-content">
+                        <h2>Bab 3: Bentuk Geometri</h2>
+                        <p>Kotak, segitiga, dan lingkaran di sekitarmu.</p>
+                    </div>
+                </div>
+                <a href="bab3.html" class="btn btn-bab">Belajar <i class="fas fa-play"></i></a>
+            </section>
+
+            <section class="modul-bar" id="modul-4">
+                <div>
+                    <div class="modul-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="modul-content">
+                        <h2>Bab 4: Posisi & Pola</h2>
+                        <p>Di mana letak benda itu? Ayo cari tahu!</p>
+                    </div>
+                </div>
+                <a href="bab4.html" class="btn btn-bab">Belajar <i class="fas fa-play"></i></a>
+            </section>
+
+            <section class="modul-bar" id="modul-5">
+                <div>
+                    <div class="modul-icon"><i class="fas fa-pie-chart"></i></div>
+                    <div class="modul-content">
+                        <h2>Bab 5: Pecahan</h2>
+                        <p>Mari belajar membagi benda secara adil.</p>
+                    </div>
+                </div>
+                <a href="bab5.html" class="btn btn-bab">Belajar <i class="fas fa-play"></i></a>
+            </section>
+
+            <section class="modul-bar" id="modul-6">
+                <div>
+                    <div class="modul-icon"><i class="fas fa-ruler"></i></div>
+                    <div class="modul-content">
+                        <h2>Bab 6: Pengukuran</h2>
+                        <p>Ukur panjang dan berat benda di rumah.</p>
+                    </div>
+                </div>
+                <a href="bab6.html" class="btn btn-bab">Belajar <i class="fas fa-play"></i></a>
+            </section>
+
+            <section class="modul-bar" id="modul-7">
+                <div>
+                    <div class="modul-icon"><i class="fas fa-sort-numeric-down"></i></div>
+                    <div class="modul-content">
+                        <h2>Bab 7: Bilangan 100</h2>
+                        <p>Angka yang lebih besar, petualangan baru!</p>
+                    </div>
+                </div>
+                <a href="bab7.html" class="btn btn-bab">Belajar <i class="fas fa-play"></i></a>
+            </section>
+
+            <section class="modul-bar" id="modul-8">
+                <div>
+                    <div class="modul-icon"><i class="fas fa-chart-bar"></i></div>
+                    <div class="modul-content">
+                        <h2>Bab 8: Diagram</h2>
+                        <p>Melihat data lewat gambar-gambar menarik.</p>
+                    </div>
+                </div>
+                <a href="bab8.html" class="btn btn-bab">Belajar <i class="fas fa-play"></i></a>
+            </section>
+        </div>
+    </main>
+
+    <div id="game-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="document.getElementById('game-modal').style.display='none'" style="float:right; cursor:pointer; font-size: 25px;">&times;</span>
+            <h2 style="text-align:center;">Tebak Kata Matematika</h2>
+            <div id="game-score">Skor: 0</div>
+            <div class="shuffled-word" id="shuffled-word">---</div>
+            <input type="text" id="game-input" placeholder="Jawabanmu...">
+            <div id="game-status" style="text-align:center; margin-bottom:10px;"></div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn btn-bab" id="check-answer">Cek</button>
+                <button class="btn btn-primary" id="next-word" style="display:none;">Lanjut</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Media Pembelajaran Matematika SD Kelas 2.</p> <span> Dikembangkan oleh <b>Salma Yulianita</b></span>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const clickSound = document.getElementById('click-sound'); 
+        const playSound = () => { if(clickSound) clickSound.play().catch(e => {}); };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.modul-bar').forEach(modul => observer.observe(modul));
+
+        // Game tebak kata logic
+        const words = ["BILANGAN","CACAH","GEOMETRI","PECAHAN","DIAGRAM","TABEL"];
+        let currentWord = "", score = 0;
+
+        function startNewRound() {
+            currentWord = words[Math.floor(Math.random() * words.length)];
+            document.getElementById('shuffled-word').textContent = currentWord.split('').sort(() => 0.5 - Math.random()).join('');
+            document.getElementById('game-input').value = '';
+            document.getElementById('game-status').textContent = '';
+            document.getElementById('next-word').style.display = 'none';
+        }
+
+        document.getElementById('check-answer').addEventListener('click', () => {
+            const val = document.getElementById('game-input').value.toUpperCase();
+            if(val === currentWord) {
+                score++;
+                document.getElementById('game-score').textContent = "Skor: " + score;
+                document.getElementById('game-status').textContent = "Benar! 🎉";
+                document.getElementById('next-word').style.display = 'block';
+            } else {
+                document.getElementById('game-status').textContent = "Coba lagi! ❌";
+            }
+        });
+
+        document.getElementById('next-word').addEventListener('click', startNewRound);
+        document.querySelectorAll('.btn, button, #game-link, .btn-mulai').forEach(el => el.addEventListener('click', playSound));
+        
+        startNewRound();
+    });
+    </script>
+</body>
+</html>
